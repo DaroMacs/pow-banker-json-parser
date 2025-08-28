@@ -1,36 +1,112 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# JSON Date Updater
+
+This tool is specifically designed for updating test configuration files where you need to set consistent start, end, and forward dates across multiple test items with POW Banker EA.
+
+## Features
+
+- **File Upload**: Drag and drop or click to upload JSON files
+- **Live Preview**: See changes before downloading the updated file
+- **Bulk Date Updates**: Automatically updates `Start Date`, `End Date`, and `Forward Date` fields
+- **Smart Filtering**: Preserves `global_settings` objects without modification
+- **Download**: Export the updated JSON with a descriptive filename
+- **Responsive Design**: Works seamlessly on desktop and mobile devices
+- **Modern UI**: Built with Shadcn UI and Tailwind CSS for a clean, professional interface
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js 18+
+- npm or yarn
+
+### Installation
+
+1. Clone the repository:
+
+```bash
+git clone <repository-url>
+cd pow-banker-json-parser
+```
+
+2. Install dependencies:
+
+```bash
+npm install
+```
+
+3. Start the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+4. Open [http://localhost:3000](http://localhost:3000) in your browser
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## How to Use
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. **Upload JSON File**: Click the "Upload JSON" button and select your JSON file
+2. **Set Date**: Choose the date you want to apply to all test items
+3. **Preview Changes**: Click "Preview changes" to see how your JSON will look
+4. **Download**: Click "Download updated JSON" to save the modified file
 
-## Learn More
+## How It Works
 
-To learn more about Next.js, take a look at the following resources:
+The tool processes JSON files containing test configuration data and:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Preserves Structure**: Maintains the original JSON structure and formatting
+- **Updates Date Fields**: Sets `Start Date`, `End Date`, and `Forward Date` to your specified date
+- **Skips Global Settings**: Leaves `global_settings` objects unchanged
+- **Handles Arrays**: Works with both single objects and arrays of objects
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Example Transformation
 
-## Deploy on Vercel
+**Input JSON:**
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```json
+[
+  {
+    "Test Name": "test_1",
+    "Start Date": "2024-01-01",
+    "End Date": "2024-01-01",
+    "Forward Date": "2024-01-01"
+  },
+  {
+    "Test Name": "global_settings",
+    "config": "value"
+  }
+]
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+**After setting date to "2024-12-25":**
+
+```json
+[
+  {
+    "Test Name": "test_1",
+    "Start Date": "2024-12-25",
+    "End Date": "2024-12-25",
+    "Forward Date": "2024-12-25"
+  },
+  {
+    "Test Name": "global_settings",
+    "config": "value"
+  }
+]
+```
+
+## Project Structure
+
+```
+src/
+├── app/                 # Next.js app router pages
+├── components/          # React components
+│   ├── Home/           # Main application component
+│   └── ui/             # Reusable UI components
+├── hooks/              # Custom React hooks
+│   ├── useFileUpload.ts    # File upload logic
+│   └── useJsonPreview.ts   # JSON preview logic
+├── lib/                # Utility functions
+│   └── updateDates.ts      # Core date update logic
+└── utils/              # Helper utilities
+    └── fileUtils.ts        # File download utilities
+```
