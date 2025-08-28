@@ -53,7 +53,7 @@ export default function Page() {
               alt="JSON Logo"
               className="w-8 h-8"
             />
-            <h1 className="text-2xl font-bold">JSON Date Updater</h1>
+            <h1 className="text-2xl font-bold">JSON Banker Date Updater</h1>
           </div>
           <p className="text-sm text-muted-foreground">
             {fileName ? (
