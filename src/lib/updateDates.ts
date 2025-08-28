@@ -11,6 +11,7 @@ export function updateDates(data: TestItem[] | TestItem, date: string) {
       "Start Date": date,
       "End Date": date,
       "Forward Date": date,
+      Date: "Custom Period",
     };
   });
 
